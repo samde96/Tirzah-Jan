@@ -45,7 +45,9 @@ export default function AddClientPage() {
                 formDataToSend.append('logo', logo)
             }
 
-            const response = await fetch('https://trizah-communications.onrender.com/api/clients', {
+            // change this to live url when deploying
+            
+            const response = await fetch('http://localhost:5000/api/clients', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -119,7 +121,7 @@ export default function AddClientPage() {
                         className="w-full px-4 py-2 border border-input bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
                     />
                     {preview && (
-                        <div className="mt-4 flex items-center justify-center p-6 border rounded-lg bg-muted/30">
+                        <div className="mt-4 flex items-center justify-center p-6 border rounded-lg bg-white">
                             <img
                                 src={preview}
                                 alt="Preview"

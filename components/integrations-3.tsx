@@ -14,7 +14,7 @@ export default function IntegrationsSection() {
                         <div className="space-y-6">
                             <p className="text-sm text-muted-foreground">Why Tirzah Communications?</p>
                             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                                For <span className='text-white'>1 year</span>, we've flourished with the sole purpose of making your brand <span className="text-[#ffff]">Amazing</span>.
+                                For <span className='text-white'>2 years</span>, we've flourished with the sole purpose of making your brand <span className="text-[#ffff]">Amazing</span>.
                             </h2>
                             <Button
                                 style={{ backgroundColor: '#261592' }}

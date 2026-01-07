@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Create uploads directory if it doesn't exist
+
 const uploadsDir = path.join(__dirname, '../../public/uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
@@ -35,7 +35,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 
-// Health check
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });

@@ -223,6 +223,20 @@ export default function AboutPage() {
                                 Developing targeted messaging strategies that align with your business objectives and resonate with stakeholders.
                             </p>
                         </div>
+
+                         {/*Website Development */}
+                        <div className="text-center group hover:scale-105 transition-transform duration-300">
+                            <div className="inline-block p-4 rounded-lg bg-[#2a6ebd]/10 mb-4 group-hover:bg-[#2a6ebd]/20 transition-colors">
+                                <svg className="w-12 h-12 text-[#2a6ebd]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v4a1 1 0 001 1h3m10-5h3a1 1 0 011 1v4m-5 5l-5-5m0 0l-5 5m5-5v12" />
+                                </svg>
+                            </div>
+                            <h3 className="text-xl font-semibold mb-3">Website Development</h3>
+                            <p className="text-muted-foreground">
+                                Creating visually stunning and user-friendly websites that effectively communicate your brand message and engage visitors.
+                            </p>
+                        </div>
+
                     </div>
                 </div>
             </section>

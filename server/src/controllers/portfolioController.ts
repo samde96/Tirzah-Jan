@@ -4,14 +4,21 @@ import { prisma } from '../utils/prisma';
 import fs from 'fs';
 import path from 'path';
 
+
 export const getAllPortfolioItems = async (req: AuthRequest, res: Response) => {
   try {
     const { isActive } = req.query;
+
+    const key = `portfolio:all:isActive=${isActive ?? 'any'}`;
+    // const cached = await cacheGet<any[]>(key);
+    // if (cached) return res.json(cached);
 
     const items = await prisma.portfolioItem.findMany({
       where: isActive !== undefined ? { isActive: isActive === 'true' } : {},
       orderBy: { createdAt: 'desc' },
     });
+
+    // await cacheSet(key, items, 300);
 
     res.json(items);
   } catch (error) {
@@ -93,6 +100,8 @@ export const createPortfolioItem = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(201).json(item);
+    // invalidate list caches
+    // await cacheDelByPattern('portfolio:all:*');
   } catch (error) {
     console.error('Create portfolio item error:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -186,6 +195,8 @@ export const updatePortfolioItem = async (req: AuthRequest, res: Response) => {
     });
 
     console.log('Update successful:', item);
+    // invalidate caches
+    // await cacheDelByPattern('portfolio:all:*');
     res.json(item);
   } catch (error: any) {
     console.error('Update portfolio item error:');
@@ -226,6 +237,8 @@ export const deletePortfolioItem = async (req: AuthRequest, res: Response) => {
     await prisma.portfolioItem.delete({
       where: { id },
     });
+    // invalidate caches
+    // await cacheDelByPattern('portfolio:all:*');
 
     res.json({ message: 'Portfolio item deleted successfully' });
   } catch (error) {

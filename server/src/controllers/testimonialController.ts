@@ -5,6 +5,7 @@ import path from 'path';
 import fs from 'fs';
 
 const prisma = new PrismaClient();
+// import { cacheGet, cacheSet, cacheDelByPattern } from '../utils/cache';
 
 // Configure multer for logo uploads
 const storage = multer.diskStorage({
@@ -40,10 +41,16 @@ export const upload = multer({
 // Get all testimonials
 export const getAllTestimonials = async (req: Request, res: Response) => {
   try {
+    const key = 'testimonials:all';
+    // const cached = await cacheGet<any[]>(key);
+    // if (cached) return res.json(cached);
+
     const testimonials = await prisma.testimonial.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' }
     });
+
+    // await cacheSet(key, testimonials, 300);
 
     res.json(testimonials);
   } catch (error) {
@@ -96,6 +103,7 @@ export const createTestimonial = async (req: Request, res: Response) => {
     });
 
     res.status(201).json(testimonial);
+    // await cacheDelByPattern('testimonials:*');
   } catch (error) {
     console.error('Error creating testimonial:', error);
     res.status(500).json({ error: 'Failed to create testimonial' });
@@ -141,7 +149,7 @@ export const updateTestimonial = async (req: Request, res: Response) => {
       where: { id },
       data: updateData
     });
-
+    // await cacheDelByPattern('testimonials:*');
     res.json(updatedTestimonial);
   } catch (error) {
     console.error('Error updating testimonial:', error);
@@ -173,7 +181,7 @@ export const deleteTestimonial = async (req: Request, res: Response) => {
     await prisma.testimonial.delete({
       where: { id }
     });
-
+    // await cacheDelByPattern('testimonials:*');
     res.json({ message: 'Testimonial deleted successfully' });
   } catch (error) {
     console.error('Error deleting testimonial:', error);

@@ -1,38 +1,43 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [message, setMessage] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setMessage('');
-    setLoading(true);
+    e.preventDefault()
+    setError("")
+    setMessage("")
+    setLoading(true)
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/forgot-password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to request reset');
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to reset password")
 
-      setMessage('If that email exists, a reset link has been sent.');
+      setMessage("Password has been reset successfully.")
+      setEmail("")
+      setPassword("")
     } catch (err: any) {
-      setError(err.message || 'An error occurred');
+      setError(err.message || "An error occurred")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -61,12 +66,28 @@ export default function ForgotPassword() {
               />
             </div>
 
+            <div>
+              <label htmlFor="password" className="text-sm font-medium">
+                New Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3 py-2 border rounded bg-background"
+                placeholder="Enter new password"
+                required
+                disabled={loading}
+              />
+            </div>
+
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? "Setting password..." : "Enter New Password"}
             </Button>
           </form>
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

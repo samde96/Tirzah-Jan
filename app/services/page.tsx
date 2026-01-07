@@ -19,6 +19,10 @@ const services = [
     {
         title: "Strategic Communication",
         description: "We develop comprehensive communication strategies that align with your business objectives and resonate with stakeholders. From internal communications to stakeholder engagement, we ensure your message is clear, consistent, and impactful across all touchpoints."
+    },
+    {
+        title: "Website Development",
+        description: "In today's digital age, your website is often the first impression potential customers have of your brand. We design and develop visually stunning, user-friendly websites that not only captivate visitors but also drive conversions and enhance your online presence."
     }
 ]
 
@@ -40,7 +44,7 @@ export default function ServicesPage() {
                                 What We Do Best
                             </h1>
                             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-                                For <span className="text-[#261592] font-semibold">1 year</span>, we've flourished with the sole purpose of making your brand <span className="text-[#261592] font-semibold">Amazing</span>.
+                                For <span className="text-[#261592] font-semibold">2 years</span>, we've flourished with the sole purpose of making your brand <span className="text-[#261592] font-semibold">Amazing</span>.
                             </p>
                         </motion.div>
                     </div>
@@ -72,13 +76,7 @@ export default function ServicesPage() {
                             <p className="text-white mb-6">
                                 Let's work together to create something amazing for your business.
                             </p>
-                            {/* <div className="flex items-center justify-center gap-4 text-sm">
-                                <span>We Research</span>
-                                <span>•</span>
-                                <span>We Innovate</span>
-                                <span>•</span>
-                                <span>We Create</span>
-                            </div> */}
+                            
                         </div>
                     </motion.div>
                 </div>

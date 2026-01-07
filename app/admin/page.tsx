@@ -15,7 +15,7 @@ export default function AdminPage() {
             router.push('/admin/dashboard')
         } else {
             // If not logged in, redirect to login
-            router.push('/admin/login')
+            router.push('/admin/register')
         }
     }, [router])
 

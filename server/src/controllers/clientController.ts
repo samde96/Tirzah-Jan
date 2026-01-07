@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+// import { cacheGet, cacheSet, cacheDelByPattern } from '../utils/cache';
 
 const prisma = new PrismaClient();
 
@@ -40,10 +41,16 @@ export const upload = multer({
 // Get all clients
 export const getAllClients = async (req: Request, res: Response) => {
   try {
+    const key = 'clients:all';
+    // const cached = await cacheGet<any[]>(key);
+    // if (cached) return res.json(cached);
+
     const clients = await prisma.client.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' }
     });
+
+    // await cacheSet(key, clients, 300);
 
     res.json(clients);
   } catch (error) {
@@ -97,6 +104,7 @@ export const createClient = async (req: Request, res: Response) => {
     });
 
     res.status(201).json(client);
+    // await cacheDelByPattern('clients:*');
   } catch (error) {
     console.error('Error creating client:', error);
     res.status(500).json({ error: 'Failed to create client' });
@@ -137,7 +145,7 @@ export const updateClient = async (req: Request, res: Response) => {
       where: { id },
       data: updateData
     });
-
+    // await cacheDelByPattern('clients:*');
     res.json(updatedClient);
   } catch (error) {
     console.error('Error updating client:', error);
@@ -167,7 +175,7 @@ export const deleteClient = async (req: Request, res: Response) => {
     await prisma.client.delete({
       where: { id }
     });
-
+    // await cacheDelByPattern('clients:*');
     res.json({ message: 'Client deleted successfully' });
   } catch (error) {
     console.error('Error deleting client:', error);

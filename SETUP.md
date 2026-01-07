@@ -292,3 +292,4 @@ For issues or questions:
 2. Review the API endpoints documentation
 3. Check MongoDB connection and logs
 4. Verify environment variables are set correctly
+5. Contact CEM Technologies - creativeaglemedia@gmail.com
