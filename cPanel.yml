@@ -1,0 +1,58 @@
+---
+deployment:
+  version: 1.0
+  kind: nextjs
+  
+build:
+  engine: nodejs
+  versions:
+    node: "20"
+  
+  before_build:
+    - npm ci
+    - npm run prisma:generate || true
+  
+  build_command: npm run server:build && npm run build
+  
+  after_build:
+    - npm prune --production
+    - npx prisma migrate deploy || true
+
+server:
+  document_root: /public
+  nodejs:
+    port: 5000
+    start_file: "server/dist/index.js"
+    
+  restart_regex: ^(app|server|lib|components|next\.config)
+  
+  env:
+    NODE_ENV: production
+    DATABASE_URL: ${DATABASE_URL}
+    JWT_SECRET: ${JWT_SECRET}
+
+runtime:
+  type: nodejs
+  versions:
+    - "20"
+
+cache:
+  static:
+    - /public/static
+    - /_next/static
+  
+  rules:
+    - path: /_next/
+      max_age: 31536000
+    - path: /static/
+      max_age: 31536000
+
+error_handling:
+  log_file: logs/server-error.log
+  max_log_size: "100M"
+
+deployment_hooks:
+  post_deploy:
+    - npm run server:build
+    - npx prisma migrate deploy || true
+    - pm2 restart tirzah-server || pm2 start "npm run server:start" --name tirzah-server
