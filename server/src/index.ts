@@ -9,7 +9,7 @@ import contactRoutes from './routes/contactRoutes';
 import clientRoutes from './routes/clientRoutes';
 import testimonialRoutes from './routes/testimonialRoutes';
 
-dotenv.config();
+dotenv.config({quiet: true});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
